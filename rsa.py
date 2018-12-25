@@ -1,4 +1,5 @@
-import numpy as np
+#import numpy as np
+import string
 from signals import *
 
 def phi(p, q):
@@ -89,14 +90,25 @@ def getValues():
     e = int(eEdit.currentText())
     return (p,q,e)    
 
+def clean_str(dirty):
+    clean = ''
+    for char in dirty:
+        if char == '-' or char in '0123456789':
+            clean += char
+    if clean[-1] == '-':
+        clean = clean[:-1]
+    return clean
+
 def encPressed():
     eE = encodedEdit.toPlainText()
-    if len(eE) == 0 or '-' not in eE:
+    clean_eE = clean_str(eE)
+    if len(eE) == 0:
         return
-    set_m = [int(num) for num in eE.split('-')]
+    set_m = [int(num) for num in clean_eE.split('-')]
     set_c = encrypt(set_m, C.N, C.e)
     str_c = setToNums(set_c)
     cipherEdit.setText(str_c)
+#    decCipherEdit.setText(bytes(set_c).decode())
     decButton.setDefault(True)
     encButton.setDefault(False)
     decButton.setFocus()
@@ -104,13 +116,17 @@ def encPressed():
 def decPressed():
     decButton.setText("Loading")
     cE = cipherEdit.toPlainText()
-    if len(cE) == 0 or '-' not in cE:
+    if len(cE) == 0:
         return
-    set_c = [int(num) for num in cE.split('-')]
+    clean_cE = clean_str(cE)
+    set_c = [int(num) for num in clean_cE.split('-')]
     set_m = decrypt(set_c, C.N, C.d)
     str_m = setToNums(set_m)
     decodedEdit.setText(str_m)
-    outputEdit.setText(bytes(set_m).decode())
+    try:
+        outputEdit.setText(bytes(set_m).decode())
+    except ValueError as e:
+        outputEdit.setText('?')
     decButton.setText("Decrypt with public key (N,d)")
 
 pEdit.currentIndexChanged.connect(updateConstants)
@@ -122,38 +138,3 @@ decButton.clicked.connect(decPressed)
 
 window.show()
 app.exec_()
-'''
-p = int(input("P"))
-if p == 0: p = 48611
-q = int(input("Q"))
-if q == 0: q = 37813
-N = p*q
-phi = (p-1)*(q-1)
-print("PHI "+str(phi))
-# E should be coprime to PHI because ed = 1 mod phi
-e = int(input("E"))
-if e == 0: e = 1987
-while (e > phi and e < 1):
-    print("1 < E < Phi. Try again")
-    e = int(input('E'))
-d = modInv(e, phi)
-print("D"+str(d))
-str_m = input("M")
-set_m = strToSet(str_m)
-print(set_m)
-nums_m = setToNums(set_m)
-print(nums_m)
-set_c = encrypt(set_m, N, e)
-print(set_c)
-nums_c = setToNums(set_c)
-
-nums_c = str(set_c[0])
-for i in set_c[1:]:
-    nums_c += '-' + str(i)
-
-print(nums_c)
-set_m = decrypt(set_c, N, d)
-print(set_m)
-nums_m = setToNums(set_m)
-print(nums_m)
-'''
