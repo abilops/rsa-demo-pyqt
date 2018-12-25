@@ -129,12 +129,22 @@ def decPressed():
         outputEdit.setText('?')
     decButton.setText("Decrypt with public key (N,d)")
 
+def reset():
+    pEdit.setCurrentIndex(200)
+    qEdit.setCurrentIndex(205)
+    eEdit.setCurrentIndex(10)
+    inputEdit.setText("")
+#    encodedEdit.setText('')
+    cipherEdit.setText('')
+    outputEdit.setText('')
+    decodedEdit.setText('')
 pEdit.currentIndexChanged.connect(updateConstants)
 qEdit.currentIndexChanged.connect(updateConstants)
 eEdit.currentIndexChanged.connect(updateConstants)
 inputEdit.textChanged.connect(inputDone)
 encButton.clicked.connect(encPressed)
 decButton.clicked.connect(decPressed)
+resetButton.clicked.connect(reset)
 
 window.show()
 app.exec_()
