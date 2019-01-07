@@ -54,7 +54,7 @@ formLayout.addRow(eLabel, eEdit)
 #paramsLayout.addWidget(pLabel, 0,0)
 #paramsLayout.addWidget(qLabel, 1,0)
 #paramsLayout.addWidget(eLabel, 2,0)
-NLabel = QLabel("N = 1574449")
+NLabel = QLabel("N = 1574449(21 bits)")
 PhiLabel = QLabel("φ = 1571940")
 DLabel = QLabel("d = 224563")
 

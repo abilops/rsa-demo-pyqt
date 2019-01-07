@@ -79,7 +79,8 @@ def updateConstants():
     else:
         encButton.setEnabled(True)
         decButton.setEnabled(True)
-    NLabel.setText("N = " + str(C.N))
+    bits = countBits(C.N)
+    NLabel.setText("N = " + str(C.N) + "(" + str(bits) + " bits)")
     PhiLabel.setText("φ = "+ str(C.Phi))
     DLabel.setText("d = "+ str(C.d))
     encButton.setDefault(True)
@@ -138,6 +139,16 @@ def reset():
     cipherEdit.setText('')
     outputEdit.setText('')
     decodedEdit.setText('')
+    inputEdit.setFocus()
+
+def countBits(N):
+    p = 1
+    n = 2
+    while n < N:
+        p += 1
+        n *= 2
+    return p
+
 pEdit.currentIndexChanged.connect(updateConstants)
 qEdit.currentIndexChanged.connect(updateConstants)
 eEdit.currentIndexChanged.connect(updateConstants)
