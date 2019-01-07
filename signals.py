@@ -1,14 +1,33 @@
+'''************************************************************
+Name       : RSA Calculations Demonstration
+Description: A graphical programme that demonstrates the
+                working of the RSA cryptosystem in crude way
+Author     : Aadi B.
+Date       : 25 Dec 2018
+Files      : rsa.py => Contains all mathematics code
+                and GUI connections
+             signals.py => All GUI constructers
+             primes.txt => List of primes upto 10,000
+             primes.py  => Returns ints from primes.txt as a set
+************************************************************'''
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 from primes import primes
 app = QApplication([])
 window = QWidget()
-inlayout = QHBoxLayout()
-ciplayout = QHBoxLayout()
-outlayout = QHBoxLayout()
-oplayout = QVBoxLayout()
+# parameters area
 paramsLayout = QGridLayout()
+# for parameters
 formLayout = QFormLayout()
+# input (cleartext) area
+inlayout = QHBoxLayout()
+# ciphertext area
+ciplayout = QHBoxLayout()
+# decrypted (cleartext)  area
+outlayout = QHBoxLayout()
+# final layout
+oplayout = QVBoxLayout()
+
 inputEdit = QTextEdit('Welcome')
 inputEdit.setTabChangesFocus(True)
 
@@ -48,33 +67,29 @@ qLabel.setBuddy(qEdit)
 eLabel = QLabel("Value of &e :")
 eLabel.setBuddy(eEdit)
 
-formLayout.addRow(pLabel, pEdit)
-formLayout.addRow(qLabel, qEdit)
-formLayout.addRow(eLabel, eEdit)
-#paramsLayout.addWidget(pLabel, 0,0)
-#paramsLayout.addWidget(qLabel, 1,0)
-#paramsLayout.addWidget(eLabel, 2,0)
 NLabel = QLabel("N = 1574449(21 bits)")
 PhiLabel = QLabel("φ = 1571940")
 DLabel = QLabel("d = 224563")
 
 resetButton = QPushButton("&Reset")
-#paramsLayout.addWidget(pEdit, 0,1)
-#paramsLayout.addWidget(qEdit, 1,1)
-#paramsLayout.addWidget(eEdit, 2, 1,)
+
+formLayout.addRow(pLabel, pEdit)
+formLayout.addRow(qLabel, qEdit)
+formLayout.addRow(eLabel, eEdit)
+
 paramsLayout.addLayout(formLayout, 0,0, 3,1)
 paramsLayout.addWidget(NLabel, 0,2, QtCore.Qt.AlignCenter)
 paramsLayout.addWidget(PhiLabel, 1,2, QtCore.Qt.AlignCenter)
 paramsLayout.addWidget(DLabel, 2,2, QtCore.Qt.AlignCenter)
 paramsLayout.addWidget(resetButton, 0,3, 3, 1,QtCore.Qt.AlignCenter)
+
 inlayout.addWidget(inputEdit)
 inlayout.addWidget(encodedEdit)
-
 ciplayout.addWidget(cipherEdit)
 #ciplayout.addWidget(decCipherEdit)
-
 outlayout.addWidget(decodedEdit)
 outlayout.addWidget(outputEdit)
+
 oplayout.addLayout(paramsLayout)
 oplayout.addLayout(inlayout)
 oplayout.addWidget(encButton)
@@ -84,8 +99,3 @@ oplayout.addLayout(outlayout)
 
 window.setLayout(oplayout)
 window.setWindowTitle("RSA Demo")
-
-#pEdit.currentIndexChanged.connect(limitEtoPhi)
-#qEdit.currentIndexChanged.connect(limitEtoPhi)
-
-

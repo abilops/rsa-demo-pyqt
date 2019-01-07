@@ -1,9 +1,24 @@
+'''************************************************************
+Name       : RSA Calculations Demonstration
+Description: A graphical programme that demonstrates the
+                working of the RSA cryptosystem in crude way
+Author     : Aadi B.
+Date       : 25 Dec 2018
+Files      : rsa.py => Contains all mathematics code
+                and GUI connections
+             signals.py => All GUI constructers
+             primes.txt => List of primes upto 10,000
+             primes.py  => Returns ints from primes.txt as a set
+************************************************************'''
 #import numpy as np
 import string
+# Signal.py contains all GUI code
 from signals import *
 
+# Returns Euler's Totient function of primes p & q
 def phi(p, q):
     return (p-1)*(q-1)
+
 # Assuming p is odd, which it almost always has to be
 def modEx(n, p, N):
     c = 1
@@ -11,11 +26,6 @@ def modEx(n, p, N):
     while i < p:
         c = (n * c) % N
         i += 1
-    '''
-    ans = (n**p) % N
-    if ans != c:
-        print('MODEX NOT WORKING')
-    '''
     return c
 
 def encrypt(set_m, N, e):
@@ -31,11 +41,10 @@ def modInv(e, Phi):
     while m < 0 or n > 0:
         m += Phi
         n -= e
-# em + nPhi = 1. So e(-m) = 1 mod phi.
     return m
 
 
-# To find Bezout's integers to satisfy mx + ny = 1
+# To find Bezout's integers m & n to satisfy mx + ny = 1
 def eEA(x,y):
     (q1,r1) = divmod(x,y)
     if r1 > 1:
@@ -47,6 +56,7 @@ def eEA(x,y):
         print("If mx+ny=1, GCD|RHS => GCD|LHS=>GCD must be 1. Is it?")
         return 0,0
 
+# Set of integers to string of hyphen-delimited integers
 def setToNums(set_a):
     if len(set_a) == 0:
         return '0'
@@ -55,6 +65,7 @@ def setToNums(set_a):
         s += '-' + str(i)
     return s
 
+# Alphanumeric sentence to set of integers (ASCII)
 def strToSet(s):
     return [int.from_bytes(char.encode(), 'big') for char in s]
 
@@ -67,6 +78,7 @@ class constants:
     e = 7
     d = 224563
 C = constants()
+
 def updateConstants():
     C.p, C.q, C.e = getValues()
     C.N = C.p*C.q
@@ -91,6 +103,7 @@ def getValues():
     e = int(eEdit.currentText())
     return (p,q,e)    
 
+# Ignore inputs that would crash the program
 def clean_str(dirty):
     clean = ''
     for char in dirty:
@@ -102,9 +115,9 @@ def clean_str(dirty):
 
 def encPressed():
     eE = encodedEdit.toPlainText()
-    clean_eE = clean_str(eE)
     if len(eE) == 0:
         return
+    clean_eE = clean_str(eE)
     set_m = [int(num) for num in clean_eE.split('-')]
     set_c = encrypt(set_m, C.N, C.e)
     str_c = setToNums(set_c)
