@@ -21,3 +21,5 @@ I know for a fact that this runs on Windows, but you're on your own to figure ou
 
 # How does it work?
 Go read [this beautiful PDF](http://www.mathaware.org/mam/06/Kaliski.pdf)
+
+If that one's too difficult, read [this more beautiful PDF](https://www.dropbox.com/s/0k1t1k355vyw9q4/RSA%20poster.pdf?dl=0 "Really beautiful")
