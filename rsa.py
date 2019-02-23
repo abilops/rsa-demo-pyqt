@@ -12,6 +12,7 @@ Files      : rsa.py => Contains all mathematics code
 ************************************************************'''
 #import numpy as np
 import string
+import math
 # Signal.py contains all GUI code
 from signals import *
 
@@ -155,12 +156,7 @@ def reset():
     inputEdit.setFocus()
 
 def countBits(N):
-    p = 1
-    n = 2
-    while n < N:
-        p += 1
-        n *= 2
-    return p
+    return math.ceil(math.log2(N))
 
 pEdit.currentIndexChanged.connect(updateConstants)
 qEdit.currentIndexChanged.connect(updateConstants)
